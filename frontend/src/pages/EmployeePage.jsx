@@ -53,7 +53,7 @@ function EmployeePage() {
   }
 
   return (
-    <>
+    <div className="container">
       <h1>HRMS Lite</h1>
 
       {/* Add Employee Form */}
@@ -98,7 +98,7 @@ function EmployeePage() {
         <button type="submit">Add Employee</button>
       </form>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <div className="error">{error}</div>}
 
       {/* Employee Table */}
       {loading && <p>Loading employees...</p>}
@@ -106,7 +106,7 @@ function EmployeePage() {
       {!loading && employees.length === 0 && <p>No employees found.</p>}
 
       {!loading && employees.length > 0 && (
-        <table border="1" cellPadding="8">
+        <table>
           <thead>
             <tr>
                 <th>Employee ID</th>
@@ -125,9 +125,13 @@ function EmployeePage() {
                 <td>{emp.email}</td>
                 <td>{emp.department}</td>
                 <td>
-                    <button onClick={() => handleDelete(emp.employee_id)}>
+                    <button
+                        className="btn-delete"
+                        onClick={() => handleDelete(emp.employee_id)}
+                        >
                         Delete
                     </button>
+
                 </td>
                 </tr>
 
@@ -135,7 +139,7 @@ function EmployeePage() {
           </tbody>
         </table>
       )}
-    </>
+    </div>
   );
 }
 
@@ -157,4 +161,3 @@ function handleDelete(employeeId) {
       setError(err.message);
     });
 }
-

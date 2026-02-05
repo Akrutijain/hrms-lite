@@ -1,0 +1,111 @@
+/* Global reset */
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background-color: #f5f7fb;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* Page container */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Headings */
+h1, h2 {
+  margin-bottom: 16px;
+  color: #222;
+}
+
+/* Form */
+form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+form input,
+form select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+form button {
+  grid-column: span 4;
+  padding: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #1e40af;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+table th {
+  background-color: #f1f5f9;
+  text-align: left;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+table td {
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Buttons */
+.btn-delete {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-delete:hover {
+  background-color: #b91c1c;
+}
+
+/* Error message */
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+}

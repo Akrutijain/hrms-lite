@@ -81,7 +81,7 @@ function AttendancePage() {
       {records.length === 0 && <p>No records found.</p>}
 
       {records.length > 0 && (
-        <table border="1" cellPadding="8">
+        <table>
           <thead>
             <tr>
               <th>Date</th>
