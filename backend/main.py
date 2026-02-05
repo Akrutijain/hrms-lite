@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 from datetime import date
@@ -90,6 +91,19 @@ def mark_attendance(att: AttendanceCreate, db: Session = Depends(get_db)):
 
 @app.get("/attendance/{employee_id}")
 def get_attendance(employee_id: str, db: Session = Depends(get_db)):
-    return db.query(Attendance).filter(
+    records = db.query(Attendance).filter(
         Attendance.employee_id == employee_id
     ).all()
+
+    return JSONResponse(
+        status_code=200,
+        content=[
+            {
+                "id": r.id,
+                "employee_id": r.employee_id,
+                "date": r.date.isoformat(),
+                "status": r.status
+            }
+            for r in records
+        ]
+    )
