@@ -22,8 +22,9 @@ export async function addEmployee(employee) {
   return response.json();
 }
 
+
 export async function markAttendance(attendance) {
-  const response = await fetch(`${API_BASE_URL}/attendance`, {
+  const response = await fetch("http://127.0.0.1:8000/attendance", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,14 +42,14 @@ export async function markAttendance(attendance) {
 
 export async function getAttendance(employeeId) {
   const response = await fetch(
-    `${API_BASE_URL}/attendance/${employeeId}`
+    `http://127.0.0.1:8000/attendance/${employeeId}`
   );
   return response.json();
 }
 
 export async function deleteEmployee(employeeId) {
   const response = await fetch(
-    `${API_BASE_URL}/employees/${employeeId}`,
+    `https://hrms-lite-backend-nyu0.onrender.com/employees/${employeeId}`,
     {
       method: "DELETE",
     }

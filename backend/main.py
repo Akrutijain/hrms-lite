@@ -84,7 +84,6 @@ def mark_attendance(att: AttendanceCreate, db: Session = Depends(get_db)):
     if not emp:
         raise HTTPException(status_code=404, detail="Employee not found")
 
-    # 🔥 Check if attendance already exists for same date
     existing = db.query(Attendance).filter(
         Attendance.employee_id == att.employee_id,
         Attendance.date == att.date
@@ -101,3 +100,9 @@ def mark_attendance(att: AttendanceCreate, db: Session = Depends(get_db)):
     db.add(record)
     db.commit()
     return {"message": "Attendance marked"}
+
+@app.get("/attendance/{employee_id}")
+def get_attendance(employee_id: str, db: Session = Depends(get_db)):
+    return db.query(Attendance).filter(
+        Attendance.employee_id == employee_id
+    ).all()

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getEmployees } from "../services/api";
-import { markAttendance, getAttendance } from "../services/api";
+import { getEmployees, markAttendance, getAttendance } from "../services/api";
 
 function AttendancePage() {
   const [employees, setEmployees] = useState([]);
@@ -8,31 +7,65 @@ function AttendancePage() {
   const [date, setDate] = useState("");
   const [status, setStatus] = useState("Present");
   const [records, setRecords] = useState([]);
+  const [error, setError] = useState("");
 
+  // Load employees on page load
   useEffect(() => {
-    getEmployees().then(setEmployees);
+    getEmployees()
+      .then(setEmployees)
+      .catch(() => setEmployees([]));
   }, []);
 
+  // Load attendance records for selected employee
+  function loadAttendance(id) {
+    if (!id) {
+      setRecords([]);
+      return;
+    }
+
+    getAttendance(id)
+      .then((data) => {
+        setRecords(data);
+        setError("");
+      })
+      .catch(() => {
+        // Treat 404 as "no attendance yet"
+        setRecords([]);
+        setError("");
+      });
+  }
+
+  // Submit attendance
   function submitAttendance(e) {
     e.preventDefault();
+    setError("");
+
+    if (!employeeId) {
+      setError("Please select an employee");
+      return;
+    }
 
     markAttendance({
       employee_id: employeeId,
       date: date,
       status: status,
-    }).then(() => {
-      loadAttendance(employeeId);
-    });
-  }
-
-  function loadAttendance(id) {
-    getAttendance(id).then(setRecords);
+    })
+      .then(() => {
+        // Refresh attendance after marking/updating
+        loadAttendance(employeeId);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   }
 
   return (
-    <>
+    <div className="container">
       <h1>Attendance</h1>
 
+      {error && <div className="error">{error}</div>}
+
+      {/* Attendance Form */}
       <form onSubmit={submitAttendance}>
         <select
           value={employeeId}
@@ -50,8 +83,6 @@ function AttendancePage() {
           ))}
         </select>
 
-        <br /><br />
-
         <input
           type="date"
           value={date}
@@ -59,26 +90,22 @@ function AttendancePage() {
           required
         />
 
-        <br /><br />
-
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
         >
-          <option>Present</option>
-          <option>Absent</option>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
         </select>
-
-        <br /><br />
 
         <button type="submit">Mark Attendance</button>
       </form>
 
-      <hr />
+      <h2>Attendance Records</h2>
 
-      <h3>Attendance Records</h3>
-
-      {records.length === 0 && <p>No records found.</p>}
+      {records.length === 0 && (
+        <p className="empty">No attendance records found.</p>
+      )}
 
       {records.length > 0 && (
         <table>
@@ -98,7 +125,7 @@ function AttendancePage() {
           </tbody>
         </table>
       )}
-    </>
+    </div>
   );
 }
 
