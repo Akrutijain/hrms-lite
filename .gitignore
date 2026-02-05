@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+hrms.db
+
+# Node
+node_modules/
+dist/
+
+# Env
+.env
