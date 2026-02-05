@@ -76,7 +76,6 @@ def delete_employee(employee_id: str, db: Session = Depends(get_db)):
 
 @app.post("/attendance")
 def mark_attendance(att: AttendanceCreate, db: Session = Depends(get_db)):
-    # Check employee exists
     emp = db.query(Employee).filter(
         Employee.employee_id == att.employee_id
     ).first()
@@ -84,18 +83,6 @@ def mark_attendance(att: AttendanceCreate, db: Session = Depends(get_db)):
     if not emp:
         raise HTTPException(status_code=404, detail="Employee not found")
 
-    existing = db.query(Attendance).filter(
-        Attendance.employee_id == att.employee_id,
-        Attendance.date == att.date
-    ).first()
-
-    if existing:
-        # Update status instead of creating duplicate
-        existing.status = att.status
-        db.commit()
-        return {"message": "Attendance updated"}
-
-    # Create new attendance
     record = Attendance(**att.dict())
     db.add(record)
     db.commit()
