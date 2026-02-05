@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getEmployees, addEmployee } from "../services/api";
+import { getEmployees, addEmployee, deleteEmployee } from "../services/api";
 
 function EmployeePage() {
   const [employees, setEmployees] = useState([]);
@@ -109,11 +109,13 @@ function EmployeePage() {
         <table border="1" cellPadding="8">
           <thead>
             <tr>
-              <th>Employee ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Department</th>
+                <th>Employee ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Action</th>
             </tr>
+
           </thead>
           <tbody>
             {employees.map((emp) => (
@@ -122,7 +124,13 @@ function EmployeePage() {
                 <td>{emp.full_name}</td>
                 <td>{emp.email}</td>
                 <td>{emp.department}</td>
-              </tr>
+                <td>
+                    <button onClick={() => handleDelete(emp.employee_id)}>
+                        Delete
+                    </button>
+                </td>
+                </tr>
+
             ))}
           </tbody>
         </table>
@@ -132,3 +140,21 @@ function EmployeePage() {
 }
 
 export default EmployeePage;
+
+
+function handleDelete(employeeId) {
+  if (!window.confirm("Are you sure you want to delete this employee?")) {
+    return;
+  }
+
+  deleteEmployee(employeeId)
+    .then(() => {
+      setEmployees((prev) =>
+        prev.filter((emp) => emp.employee_id !== employeeId)
+      );
+    })
+    .catch((err) => {
+      setError(err.message);
+    });
+}
+
