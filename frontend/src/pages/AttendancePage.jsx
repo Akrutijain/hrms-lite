@@ -116,14 +116,13 @@ function AttendancePage() {
             </tr>
           </thead>
           <tbody>
-                {records.map((r) => (
-                    <tr key={`${r.employee_id}-${r.date}`}>
-                    <td>{r.date}</td>
-                    <td>{r.status}</td>
-                    </tr>
-                ))}
+            {records.map((r, index) => (
+              <tr key={index}>
+                <td>{r.date}</td>
+                <td>{r.status}</td>
+              </tr>
+            ))}
           </tbody>
-
         </table>
       )}
     </div>
