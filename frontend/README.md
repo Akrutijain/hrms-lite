@@ -8,7 +8,7 @@ The system allows an admin to manage employees and track daily attendance using 
 ## 🚀 Live Application
 
 - **Frontend (Netlify)**  
-  https://inquisitive-youtiao-87f389.netlify.app/
+  https://tubular-crepe-9e7737.netlify.app/
 
 - **Backend API (Render)**  
   https://hrms-lite-backend-nyu0.onrender.com/docs
